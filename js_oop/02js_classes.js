@@ -25,14 +25,14 @@ class Triangle {
 }
 
 let myTri = new Triangle(); // Instantiation here
-myTri.a = 3;  // Can add or look at arbitrary properties
+myTri.a = 3; // Can add or look at arbitrary properties
 myTri.b = 4;
 console.log(myTri);
 
 myTri.getArea(); // 6
 myTri.getHypotenuse(); // 5
 
-myTri instanceof Triangle // true
+myTri instanceof Triangle; // true
 
 /*
 ! Constructors
@@ -47,11 +47,9 @@ The most common things to do with a constructor is to assign properties and vali
 class TriangleV2 {
   constructor(a, b) {
     //? This static method determines whether the passed value is a finite number -- checks if it is a number and if the number is neither positive infinity, negative infinity, nor NaN.
-    if (!Number.isFinite(a) || a <= 0)
-    throw new Error(`Invalid a: ${a}`);
-    
-    if (!Number.isFinite(b) || b <= 0)
-    throw new Error(`Invalid b: ${b}`);
+    if (!Number.isFinite(a) || a <= 0) throw new Error(`Invalid a: ${a}`);
+
+    if (!Number.isFinite(b) || b <= 0) throw new Error(`Invalid b: ${b}`);
 
     // The provided a and b arguments will be assigned to...a and b!
     this.a = a;
@@ -64,7 +62,20 @@ class TriangleV2 {
   getHypotenuse() {
     return Math.sqrt(this.a ** 2 + this.b ** 2);
   }
+  describe() {
+    return `The triangle with the side A of ${this.a} and side B of ${this.b} and has a total area of ${this.getArea()}.`;
+  }
 }
 
 const tri = new TriangleV2(5, 12);
 console.log(tri);
+
+/*
+! Methods
+* Functions placed in a class are technically methods (formally, instance menthods).
+! They have access to properties of the object with 'this'.
+They take arguments and return data like any other function.
+* A method can call another method as well! However, to do this, you need to call it on 'this'. (See above class example, called below).
+*/
+
+console.log(tri.describe());
