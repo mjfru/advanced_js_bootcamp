@@ -29,4 +29,52 @@ console.log(sDance.call(fluffy, "salsa")); // Meow! I am fluffy...
 If we use our person object from the prior note page...
 matt.sing(); would give us what we expect.
 matt.sing.call('kelsey') would give us 'Kelsey sings La la la.', even if Kelsey's object doesn't have a sing method in it. 
+
+! Apply
+* Very similar to call, but the main difference is how it handles arguments.
+Below, if we want to borrow Ringo's greet method and use it on George, we could use call, as you'd expect, OR we can use apply.
+? However, the second argument when using apply() needs to be an array or an array-like object!
 */
+
+const ringo = {
+  firstName: "Ringo",
+  greet: function (greeting) {
+    console.log(`${this.firstName} says ${greeting}!`);
+  },
+};
+
+const george = {
+  firstName: "George",
+  lastName: "Harrison",
+};
+
+ringo.greet.apply(george, ["hi"]); // George says hi!
+
+const nums = [1, 5, 2, 99, 3, 5];
+Math.max(...nums); // This can work thanks to modern JS OR
+Math.max.apply(null, nums); // This will work since it's an array already!
+
+/*
+! Bind
+* You can "perma-bind" a function to a context and is fairly common.
+*/
+
+const conan = {
+  name: "Conan",
+  city: "Los Angeles",
+  sing: function () {
+    return `${this.name} sings La la la.`;
+  },
+};
+
+const lisa = {
+  name: "Lisa",
+  city: "San Francisco",
+};
+
+conan.sing.call(lisa);
+// If you need to do this over-and-over, you can use bind() instead.
+
+conan.sing.bind(lisa); // returns a function as is but the value is bound to Lisa.
+const lisaSing = conan.sing.bind(lisa);
+console.log(lisaSing())
