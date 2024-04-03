@@ -82,9 +82,44 @@ class Counter {
         console.log(this.count);
         this.count += this.incrementAmount;
       }.bind(this),
-      1000); //! This 'this' is now refering and bound to counter.
+      1000
+    ); //! This 'this' is now refering and bound to counter.
   }
 }
 
 const counter = new Counter();
 counter.start();
+
+/*
+! Arrow Functions & 'This'
+* Arrow functions DO NOT make their own 'this'.
+*/
+
+class Cat {
+  constructor(firstName) {
+    this.firstName = firstName;
+  }
+
+  superGreet() {
+    console.log(`#1: I am ${this.firstName}.`); // Works!
+
+    setTimeout(function () {
+      console.log(`#2: I am ${this.firstName}.`); // Uh-oh...undefined (referring to the window...)
+    }, 500);
+
+    //! This works because we don't get a new value for the keyword 'this'; it still refers to the Cat instance.
+    setTimeout(() => {
+      console.log(`#3: I am ${this.firstName}.`);
+    }, 1000);
+  }
+}
+
+let kitty = new Cat("Kitty");
+kitty.superGreet();
+
+/*
+! Key Takeaways from 'this' Section
+  1. Don't lose your 'this'; always know what the value will be or.
+  2. 'This' is a reserved word whose value is determined only at the point of function execution.
+  3. If you don't call a function yourself, you need to ensure JS knows what context 'this' should be.
+*/
