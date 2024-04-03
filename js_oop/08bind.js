@@ -22,7 +22,7 @@ conan.sing.call(lisa);
 
 conan.sing.bind(lisa); // returns a function as is but the value is bound to Lisa.
 const lisaSing = conan.sing.bind(lisa);
-console.log(lisaSing())
+console.log(lisaSing());
 
 /*
 ! Binding Arguments to a Function:
@@ -48,3 +48,43 @@ const double = multiply.bind(null, 2);
 const triple = multiply.bind(null, 3);
 // Even passing in arguments to this won't change the result.
 const alwaysNine = multiply.bind(null, 3, 3);
+
+/*
+! Where do you encounter this? Why does it matter?
+* When you do not directly call functions and instead JS calls them, a keyword 'this' is created for you.
+  - Event Listeners
+  - Timers
+  - Callback Functions (map, filter, etc.)
+* We can use bind when we want greater control over what exactly 'this' refers to.
+*/
+
+const btn = document.querySelector("#clickMe");
+btn.addEventListener("click", conan.sing);
+// Using this example from our last note page, we  could not see 'Conan' here, it would be blank because 'this' refers to the button element.
+
+//? To fix this, we can use .bind() to explicitly tell JS what we want 'this' to be.
+btn.addEventListener("click", conan.sing.bind(conan));
+
+/*
+! Bind with Timers
+*/
+
+class Counter {
+  constructor(startingNum = 0, incrementAmount = 1) {
+    this.count = startingNum;
+    this.incrementAmount = incrementAmount;
+  }
+  start() {
+    setInterval(
+      function () {
+        console.log(this); //! Value of 'this' is the window!
+        //? One approach to fix this is to use .bind() and give it a set value for 'this'.
+        console.log(this.count);
+        this.count += this.incrementAmount;
+      }.bind(this),
+      1000); //! This 'this' is now refering and bound to counter.
+  }
+}
+
+const counter = new Counter();
+counter.start();
