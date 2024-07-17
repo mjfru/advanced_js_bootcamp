@@ -1,0 +1,15 @@
+.ad {
+    height: 200px;
+    width: 200px;
+    border: 2px solid black;
+    background-color: goldenrod;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 1500px;
+}
+
+body {
+    height: 3000px;
+}
